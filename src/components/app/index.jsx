@@ -8,16 +8,27 @@ import { Search } from "../search";
 import { dataCard } from "../../data";
 import s from "./styles.module.css";
 import { Button } from '../button';
+// import styled from 'styled-components';
+import api from '../../utils/api';
+import { useDebounce } from '../../hooks/useDebounce';
+import { isLiked } from '../../utils/products';
 
 export function App() {
-  const [cards, setCards] = useState(dataCard);
+  const [cards, setCards] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const debounceSearchQuery = useDebounce(searchQuery, 300)
   function handleRequest() {
-    const filterCards = dataCard.filter((item) =>
-      item.name.includes(searchQuery)
-    );
-    setCards(filterCards);
+    // const filterCards = dataCard.filter((item) =>
+    //   item.name.includes(searchQuery)
+    // );
+    // setCards(filterCards);
+
+    api.search(debounceSearchQuery)
+      .then((dataSearch) => {
+        setCards(dataSearch);
+        // console.log(data);
+      })
   }
 
   function handleFormSubmit(e) {
@@ -29,18 +40,42 @@ export function App() {
     setSearchQuery(dataInput);
   }
 
+  function handleUpdateUser(dataUserUpdate) {
+    api.setUserInfo(dataUserUpdate)
+      .then((updateUserFromServer) => {
+        setCurrentUser(updateUserFromServer)
+      })
+  }
+
+  function handleProductLike(product) {
+    const like = isLiked(product.likes, currentUser._id)
+    api.changeLikeProductStatus(product._id, like)
+      .then((updateCard) => {
+        const newProducts = cards.map(cardState => {
+          return cardState._id === updateCard._id ? updateCard : cardState
+        })
+
+        setCards(newProducts)
+      })
+  }
+
   useEffect(() => {
     handleRequest();
-  }, [searchQuery]);
-  const margin = 40;
-  const headerStyle = {
-    color: "red",
-    margin: `${margin}px`,
-  }
+  }, [debounceSearchQuery]);
+
+
+  useEffect(() => {
+    api.getAllInfo()
+      .then(([productsData, userInfoData]) => {
+        setCurrentUser(userInfoData);
+        setCards(productsData.products);
+      })
+      .catch(err => console.log(err))
+  }, [])
 
   return (
     <>
-      <Header>
+      <Header user={currentUser} onUpdateUser={handleUpdateUser}>
         <Logo />
         <Search
           handleFormSubmit={handleFormSubmit}
@@ -48,14 +83,8 @@ export function App() {
         />
       </Header>
       <main className="content container">
-        {/* <h1 style={headerStyle}>Стилизованный заголовок</h1>
-        <Button htmlType='button' type="primary" extraClass={s.button}>Купить</Button>
-        <Button htmlType='button' type="secondary">Отложить</Button>
-        <Button htmlType='button' type="error" extraClass={s.button}>Купить</Button> */}
-
-        <Button htmlType='button'>Купить</Button>
         <Sort />
-        <CardList goods={cards} />
+        <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
       </main>
       <Footer />
     </>
