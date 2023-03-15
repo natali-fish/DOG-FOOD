@@ -15,7 +15,7 @@ import { isLiked } from '../../utils/products';
 
 export function App() {
   const [cards, setCards] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const debounceSearchQuery = useDebounce(searchQuery, 300)
   function handleRequest() {
