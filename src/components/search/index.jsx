@@ -22,4 +22,3 @@ export function Search({ handleFormSubmit, handleInputChange }) {
   );
 }
 
-

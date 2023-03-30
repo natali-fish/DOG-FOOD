@@ -51,8 +51,18 @@ class Api {
         })
             .then(this.#onResponse)
     }
-}
 
+    getProductById(idProduct) {
+        return fetch(`${this.#baseurl}/products/${idProduct}`, {
+            headers: this.#headers
+        })
+            .then(this.#onResponse)
+    }
+
+    getInfoProduct(idProduct) {
+        return Promise.all([this.getProductById(idProduct), this.getUserInfo()])
+    }
+}
 
 const api = new Api({
     baseUrl: 'https://api.react-learning.ru',
