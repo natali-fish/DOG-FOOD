@@ -27,7 +27,7 @@ export function App() {
   const [cards, setCards] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
   const [theme, setTheme] = useState(themes.light);
   const [currentSort, setCurrentSort] = useState("")
