@@ -22,23 +22,34 @@ import { CardsContext } from '../../contexts/card-context';
 import { ThemeContext, themes } from '../../contexts/theme-context';
 import { FavoritesPage } from '../../pages/favorite-page';
 import { TABS_ID } from '../../utils/constants';
+import Form from '../form';
+import RegisterForm from '../form/register-form';
+import Modal from '../modal';
 
 export function App() {
   const [cards, setCards] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false)
   const [theme, setTheme] = useState(themes.light);
   const [currentSort, setCurrentSort] = useState("")
 
+  const [modalFormStatus, setModalFormStatus] = useState(false)
+
+  const [contacts, setContacts] = useState([])
   const debounceSearchQuery = useDebounce(searchQuery, 300);
 
+  const onCloseModalForm = () => {
+    setModalFormStatus(false)
+  }
+
+
   function handleRequest() {
-    // const filterCards = dataCard.filter((item) =>
-    //   item.name.includes(searchQuery)
-    // );
-    // setCards(filterCards);
+    const filterCards = dataCard.filter((item) =>
+      item.name.includes(searchQuery)
+    );
+    setCards(filterCards);
 
     api.search(debounceSearchQuery)
       .then((dataSearch) => {
@@ -116,6 +127,10 @@ export function App() {
     theme === themes.dark ? setTheme(themes.light) : setTheme(themes.dark);
   }
 
+  function addContact(dataInfo) {
+    setContacts([...contacts, dataInfo])
+  }
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <CardsContext.Provider value={{
@@ -128,6 +143,21 @@ export function App() {
         setCurrentSort
       }}>
         <UserContext.Provider value={{ currentUser, onUpdateUser: handleUpdateUser }}>
+          {/* <Form handleForm={addContact} />
+          {contacts.map(contact => <p>{`${contact.name},${contact.lastame},${contact.phoneNumber}`}</p>)} */}
+
+<Modal isOpen={modalFormStatus} onClose={onCloseModalForm}>
+            <RegisterForm />
+          </Modal>
+          <Modal isOpen={false} >
+            <RegisterForm />
+          </Modal>
+          <Modal isOpen={false} >
+            <RegisterForm />
+          </Modal>
+          <Modal isOpen={false} >
+            <RegisterForm />
+          </Modal>
           <Header user={currentUser}>
             <Routes>
               <Route path='/' element={
@@ -153,6 +183,7 @@ export function App() {
             </Routes>
           </main>
           <Footer />
+
         </UserContext.Provider>
       </CardsContext.Provider >
     </ThemeContext.Provider>
