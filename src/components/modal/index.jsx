@@ -26,7 +26,7 @@ function Modal({ children, isOpen, onClose }) {
         </div>);
     }
 
-    return createPortal(renderContent(), document.getElementById('modal-root'));
+    return createPortal(renderContent(), document.getElementById("modal-root"));
 }
 
 export default Modal;
