@@ -14,6 +14,8 @@ import Rating from '../rating';
 import FormReview from '../form-review';
 import { useSelector } from 'react-redux';
 
+
+
 function Product({ onProductLike }) {
     const { _id, name, pictures, description, discount, price, likes = [], reviews } = useSelector(state => state.singleProduct.data)
     const currentUser = useSelector(state => state.user.data)
@@ -119,7 +121,6 @@ function Product({ onProductLike }) {
                     </div>
                 </div>
             </div>
-
 
             <FormReview title={`Отзыв о товаре ${name}`} />
         </>
