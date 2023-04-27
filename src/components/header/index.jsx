@@ -56,9 +56,7 @@ export function Header({ children }) {
           </Link>
 
         </div>
-     
-
-
+   
 
 
         {/* <span>{currentUser?.name}: {currentUser?.about}</span>

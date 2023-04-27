@@ -29,7 +29,7 @@ import ResetPassword from '../reset-password';
 import DnDPage from '../../pages/dnd-page';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChangeLikeProduct, fetchProducts, sortedProducts } from '../../storage/products/products-slice';
-import { fetchUser } from "../../storage/user/user-slice";
+import { fetchUser } from '../../storage/user/user-slice';
 
 export function App() {
   const cards = useSelector(state => state.products.data)
