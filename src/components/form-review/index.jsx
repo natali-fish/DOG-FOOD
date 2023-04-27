@@ -1,4 +1,6 @@
+
 import { Controller, useForm } from 'react-hook-form';
+
 import Form from '../form';
 import FormInput from '../form-input';
 import FormButton from '../form-button';
@@ -14,6 +16,8 @@ function FormReview({ title = 'Отзыв о товаре', productId, setProduc
     const handleSubmitFormReview = (data) => {
         console.log('handleSubmitFormReview', data);
         reset();
+
+  
     }
     const textRegister = register('text', {
         required: {
@@ -39,6 +43,8 @@ function FormReview({ title = 'Отзыв о товаре', productId, setProduc
                 }}
             />
 
+
+          
             <Form handleFormSubmit={handleSubmit(handleSubmitFormReview)}>
                 <FormInput
                     {...textRegister}

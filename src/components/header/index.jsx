@@ -5,6 +5,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { UserContext } from '../../contexts/current-user-context';
 import { ThemeContext } from '../../contexts/theme-context';
 import { CardsContext } from '../../contexts/card-context';
+
+
 import { ReactComponent as FavoriteIcon } from './img/favorites.svg'
 import { ReactComponent as LogoutIcon } from './img/logout.svg';
 import { ReactComponent as CartIcon } from './img/cart.svg';
@@ -33,6 +35,9 @@ export function Header({ children }) {
             <FavoriteIcon />
             {favorites.length !== 0 && <span className={s.iconBubble}>{favorites.length}</span>}
           </Link>
+         
+        </div>
+
 
           <Link className={s.favoritesLink} to={{ pathname: '/cart' }}>
             <CartIcon />
@@ -57,6 +62,7 @@ export function Header({ children }) {
 
         </div>
    
+
 
 
         {/* <span>{currentUser?.name}: {currentUser?.about}</span>

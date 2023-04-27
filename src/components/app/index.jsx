@@ -16,12 +16,13 @@ import { CatalogPage } from '../../pages/catalog-page';
 import { ProductPage } from '../../pages/product-page';
 import FaqPage from '../../pages/faq-page';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+
 import { NotFoundPage } from '../../pages/not-found-page';
 import { UserContext } from '../../contexts/current-user-context';
 import { CardsContext } from '../../contexts/card-context';
 import { ThemeContext, themes } from '../../contexts/theme-context';
 import { FavoritesPage } from '../../pages/favorite-page';
-import { TABS_ID } from '../../utils/constants';
+import { TABS_ID } from '../../utils/constants'
 import Modal from '../modal';
 import Register from '../register';
 import Login from '../login';
@@ -30,6 +31,7 @@ import DnDPage from '../../pages/dnd-page';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChangeLikeProduct, fetchProducts, sortedProducts } from '../../storage/products/products-slice';
 import { fetchUser } from '../../storage/user/user-slice';
+
 
 export function App() {
   const cards = useSelector(state => state.products.data)
@@ -52,7 +54,6 @@ export function App() {
 
   const backgroundLocation = location.state?.backgroundLocation;
   const initialPath = location.state?.initialPath;
-
 
 
   const onCloseRoutingModal = () => {
@@ -147,7 +148,7 @@ export function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <Header user={currentUser}>
+    <Header user={currentUser}>
         <Routes location={(backgroundLocation && { ...backgroundLocation, pathname: initialPath }) || location}>
           <Route path='/' element={
             <>
@@ -198,6 +199,7 @@ export function App() {
           </Modal>
         } />
       </Routes>}
+
     </ThemeContext.Provider >
   );
 }
