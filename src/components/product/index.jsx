@@ -126,7 +126,7 @@ function Product({ onProductLike }) {
                 </div>
             </div>
 
-            {reviews.length !== 0 && <div className={s.reviews}> {reviews.map(reviewData => <Review {...reviewData} />)}</div>}
+            {reviews.length !== 0 && <div className={s.reviews}> {reviews.map(reviewData => <Review key={reviewData._id} {...reviewData} />)}</div>}
             <FormReview title={`Отзыв о товаре ${name}`} productId={_id} />
         </>
     );
