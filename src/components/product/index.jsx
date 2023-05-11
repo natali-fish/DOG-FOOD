@@ -1,7 +1,7 @@
 import cn from 'classnames';
 
 import { calcDiscountPrice, checkProductInCart, isLiked } from '../../utils/products';
-import { Button } from '../button';
+import { Button, ButtonVariant } from '../button';
 import s from './styles.module.css';
 import { ReactComponent as LikeIcon } from "../../images/save.svg";
 import truck from "../../images/truck.svg";
@@ -15,8 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Review } from '../review';
 import { addProductCart, changeCartQuantity, decrementQuantity, incrementQuantity } from '../../storage/cart/cart-slice';
 import { ProductPrice } from '../product-price';
-import { useAppSelector } from '../../storage/hook';
 import ButtonCount from '../button-count/button-count';
+import { useAppSelector } from '../../storage/hook';
 
 
 function Product({ onProductLike }) {
@@ -63,7 +63,7 @@ function Product({ onProductLike }) {
                             handleDecrement={() => { dispatch(decrementQuantity(addDataProduct)) }}
                             handleCountChange={(newQuantity) => { dispatch(changeCartQuantity({ ...addDataProduct, quantity: newQuantity })) }}
                         />
-                        <Button href="#" type="primary" action={handleCartClick} >{!productInCartInfo.quantity || productInCartInfo.quantity === 0 ? "В корзину" : "Добавлено"}</Button>
+                        <Button href="#" variant={ButtonVariant.primary} action={handleCartClick} >{!productInCartInfo.quantity || productInCartInfo.quantity === 0 ? "В корзину" : "Добавлено"}</Button>
                     </div>
                     <button className={cn(s.favorite, { [s.favoriteActive]: like })} onClick={handleLikeClick}>
                         <LikeIcon />
@@ -126,7 +126,7 @@ function Product({ onProductLike }) {
                 </div>
             </div>
 
-            {reviews.length !== 0 && <div className={s.reviews}> {reviews.map(reviewData => <Review key={reviewData._id} {...reviewData} />)}</div>}
+            {reviews.length !== 0 && <div className={s.reviews}> {reviews.map(reviewData => <Review {...reviewData} />)}</div>}
             <FormReview title={`Отзыв о товаре ${name}`} productId={_id} />
         </>
     );
